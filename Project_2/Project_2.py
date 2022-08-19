@@ -337,16 +337,19 @@ def salesByID(input, id):
 
 # Function for retrieving the total sales by the category name
 def salesByCategory(input, id):
+    found = False
     if input.isdigit():
         print("\nInput can only be letters. Please try again. \n")
         dashboard(True, id)
-    print(f"Category: {input} ||    Price  || Total Sales")
+
     targetCat = False  # Flag to dictate if the entered category exists or not
 
     for i in categ:  # Loops through each category
         if input == i["Name"]:  # If entered category matches the name of the current category
             targetCat = i["catId"]  # Sets targetCat ID to the value of the matched category
-    if targetCat >-1 or not False:
+            found = True
+    if (targetCat >-1 ) and found:
+        print(f"Category: {input} ||    Price  || Total Sales")
         aList = []  # List used to hold the names of products within target category
         bList = []  # List used to hold the product ids
         for order in orders:  # Loops through each order
@@ -368,6 +371,9 @@ def salesByCategory(input, id):
                     print("£", y["Price"], end="\t\t")
                     print("£", total )
             print()
+        if len(aList) == 0:
+            print()
+            print("Category has no sales of products.")
         print()
     else:
         print("\nCategory doesn't exist!\n")
