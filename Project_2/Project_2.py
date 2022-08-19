@@ -33,7 +33,7 @@ def dashboard(isAdmin, id):
                 for currentCat in categ:
                     print("Category ID:", currentCat["catId"], "|| Category Name: ", currentCat["Name"],
                           "|| Category Description: ", currentCat["Description"], "\n")
-                category_name = input("What category are you looking for: ")
+                category_name = input("Enter category name you are looking for: ")
                 salesByCategory(category_name, id)  # call function for displaying all sales by category name
             elif sales == "3":
                 price_range = int(input("What range are you looking for [1] Ascending [2] Descending: "))
@@ -338,7 +338,7 @@ def salesByID(input, id):
 # Function for retrieving the total sales by the category name
 def salesByCategory(input, id):
     if input.isdigit():
-        print()
+        print("\nInput can only be letters. Please try again. \n")
         dashboard(True, id)
     print(f"Category: {input} ||    Price  || Total Sales")
     targetCat = False  # Flag to dictate if the entered category exists or not
