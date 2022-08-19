@@ -27,7 +27,7 @@ def dashboard(isAdmin, id):
                 for currentProd in prod:
                     print("Product ID:", currentProd["pId"], "|| Product Name: ", currentProd["Name"], "|| Product Price: ",
                           currentProd["Price"], "|| Category ID: ", currentProd["CategoryId"], "\n")
-                product_id = int(input("What product are you looking for: "))
+                product_id = input("What product are you looking for: ")
                 salesByID(product_id, id)  # call function for displaying all sales by product id
             elif sales == "2":
                 for currentCat in categ:
@@ -309,6 +309,11 @@ def place_order(cId, orders, prod):
 
 # Function for retrieving the total sales by product id
 def salesByID(input, id):
+    if not input.isdigit():
+        print("\nInput can only be numbers. Please try again. \n")
+        dashboard(True, id)
+    else:
+        input = int(input)
     productIds = {}  # Create an Empty Dictionary for found products
     for i in orders:  # Loops through each order
         if i['product_id'] in productIds:  # If the product of the current order is in product dictionary
@@ -341,9 +346,7 @@ def salesByCategory(input, id):
     if input.isdigit():
         print("\nInput can only be letters. Please try again. \n")
         dashboard(True, id)
-
     targetCat = False  # Flag to dictate if the entered category exists or not
-
     for i in categ:  # Loops through each category
         if input == i["Name"]:  # If entered category matches the name of the current category
             targetCat = i["catId"]  # Sets targetCat ID to the value of the matched category
