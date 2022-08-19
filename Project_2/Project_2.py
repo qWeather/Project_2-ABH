@@ -1,19 +1,13 @@
 import sys
 
-categ = [{'catId': 0, 'Name': 'Desk', 'Description': 'Free standing'},  # List of dictionaries for Categories
-         {'catId': 1, 'Name': 'Monitor', 'Description': 'PC monitors'}]
-prod = [{'pId': 0, 'Name': 'Big Desk', 'Price': 200.0, 'CategoryId': 0},  # List of dictionaries for Products
-        {'pId': 1, 'Name': 'Oled Monitor', 'Price': 120.0, 'CategoryId': 1}]
-orders = [{'order_id': 0, 'customer_id': 0, 'product_id': 0, 'product_quantity': 2,
-           'order_status': 'Shipped', 'total_price': 400.0},
-          {'order_id': 1, 'customer_id': 0, 'product_id': 1, 'product_quantity': 5,
-           'order_status': 'Shipped', 'total_price': 600.0}]  # List of dictionaries for Orders
+categ = [{'catId': 0, 'Name': 'Desk', 'Description': 'Free standing'}, {'catId': 1, 'Name': 'Monitor', 'Description': 'PC monitors'}] # List of dictionaries for Categories
+prod = [{'pId': 0, 'Name': 'Big Desk', 'Price': 200.0, 'CategoryId': 0}, {'pId': 1, 'Name': 'Oled Monitor', 'Price': 120.0, 'CategoryId': 1}] # List of dictionaries for Products
+orders = [{'order_id': 0, 'customer_id': 0, 'product_id': 0, 'product_quantity': 2, 'order_status': 'Shipped', 'total_price': 400.0},{'order_id': 1, 'customer_id': 0, 'product_id': 1, 'product_quantity': 5,
+           'order_status': 'Shipped', 'total_price': 1000.0}]      # List of dictionaries for Orders
 customers = [{"cId": 0, "Name": "Eugene", "Email": "dgsdf@fgd.com", "Number": "01296583999",
               "Street": "11 Fleet Street","Town":"Southampton","Country": "United Kingdom" ,"Password": "123"}]  # List of dictionaries for Customers
+admins = [{'adId': 0, 'Name': 'Abas', 'Password': "hello"}, {'adId': 1, 'Name': 'Beatrice', 'Password': "hello"},{'adId': 2, 'Name': 'Haze', 'Password': "hello"}] # List of dictionaries for Admins
 
-admins = [{'adId': 0, 'Name': 'Abas', 'Password': "hello"},  # List of dictionaries for Admins
-          {'adId': 1, 'Name': 'Beatrice', 'Password': "hello"},
-          {'adId': 2, 'Name': 'Haze', 'Password': "hello"}]
 
 
 # Function for Main Menu
@@ -295,7 +289,6 @@ def place_order(cId, orders, prod):
                 break
         except:
             print("\nInvalid Input.\n")
-
     totalPrice = prod[pId]["Price"] * qty  # the total price is equal to the product price into the qty
     status = "Shipped"  # initial order status is set to Shipped the moment it is placed
 
@@ -369,7 +362,9 @@ def salesByCategory(input, id):
                     total += y["total_price"]  # Add to the total price from the product total price
             biggestnum = " " * (11 - len(input) + 1) if len(input) > len(aList[i]) else " " * (11 - len(aList[i]) + 1)
             print(aList[i] + biggestnum, end="\t\t")
-            print("£", products["Price"], end="\t\t")
+            for y in prod:
+                if y["Name"]==aList[i]:
+                    print("£", y["Price"], end="\t\t")
             print("£", total )
             print()
         print()
