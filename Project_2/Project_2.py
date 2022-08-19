@@ -204,7 +204,7 @@ def insertCustomerDetails(customers, id):
         "Country": country,                                                                                                                   
         "Password": password                                                                                                                  
     }                                                                                                                                         
-    if check == -1:                                                                                                                           
+    if check != 0:                                                                                                                           
         customers.append(details)  # appending the current customer details to the end of the list                                            
     else:                                                                                                                                     
         customers.insert(id,details)  # inserting the new updated customer details                                                            
