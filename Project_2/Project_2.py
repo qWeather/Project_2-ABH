@@ -70,9 +70,8 @@ def dashboard(isAdmin, id):
                     "customer_id"]:  # check if status of order is the same as the order we're searching for
                     found = True
                     if order["order_status"]  !=  "Delivered" :
-
-                        print("\n[1] Yes\n[2] No\n")
-                        choice = int(input("Have you received this order: "))  # customer choice
+                        print()
+                        choice = int(input("Have you received this order [1] Yes [2] No: "))  # customer choice
                         print()
                         if choice == 1:
                             order["order_status"] = "Delivered"  # change order status to delivered if option is Yes
