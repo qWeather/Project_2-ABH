@@ -372,9 +372,10 @@ def salesByID(input, id):
             productIds[i['product_id']] = [i[
                                                'order_id']]  # Create a key of the current product, and initialise a list with the current order id as it's sole value
     if input in productIds:  # Checks if the entered product id exists in the product dictionary
-        numberSold = 0  # Initialise numberSold to 0
+        #numberSold = 0  # Initialise numberSold to 0
         print(f"Order ID: || Quantity Sold  || Total Price")
         for currentProd in productIds[input]:  # Loops through each order id associated with the entered product id
+            numberSold = 0  # Initialise numberSold to 0
             totalPrice = 0  # Initialise totalPrice to 0
 
             for order in orders:  # Loops through each order
