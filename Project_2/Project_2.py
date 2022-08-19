@@ -374,6 +374,7 @@ def salesByID(input, id):
     if input in productIds:  # Checks if the entered product id exists in the product dictionary
         #numberSold = 0  # Initialise numberSold to 0
         print(f"Order ID: || Quantity Sold  || Total Price")
+        grandtotal = 0; totalSales = 0
         for currentProd in productIds[input]:  # Loops through each order id associated with the entered product id
             numberSold = 0  # Initialise numberSold to 0
             totalPrice = 0  # Initialise totalPrice to 0
@@ -382,11 +383,14 @@ def salesByID(input, id):
                 if order["order_id"] == currentProd:  # If the order id of the current order matches the target order id
                     numberSold += order["product_quantity"]  # Increase numberSold by quantity in order
                     totalPrice += order["total_price"]  # Increase totalPrice by total price in order
+                    totalSales+=order["product_quantity"]
+                    grandtotal+=order["total_price"]
             print(str(currentProd) + " " * 15, end="")
             print(str(numberSold) + " " * 15, end="")
             print("£", totalPrice)
-
         print()
+        print(f"Total amount sold  :{totalSales} || Net amount in sales made £{grandtotal} \n")
+
     else:  # If the entered input doesn't as a product id
         print("\nProduct doesn't exist!\n")  # Let user know the product doesn't exist
     dashboard(True, id)  # Return to Dashboard menu
@@ -400,7 +404,7 @@ def salesByCategory(input, id):
         dashboard(True, id)
     targetCat = False  # Flag to dictate if the entered category exists or not
     for i in categ:  # Loops through each category
-        if input == i["Name"]:  # If entered category matches the name of the current category
+        if input.lower() == i["Name"].lower():  # If entered category matches the name of the current category
             targetCat = i["catId"]  # Sets targetCat ID to the value of the matched category
             found = True
     if (targetCat > -1) and found:
@@ -429,7 +433,8 @@ def salesByCategory(input, id):
             print()
         if len(aList) == 0:
             print()
-            print("Category has no sales of products.")
+            print("Category has no sales of products. ")
+
         print()
     else:
         print("\nCategory doesn't exist!\n")
