@@ -272,12 +272,16 @@ def insertProducts(prod, categ):
     prod.append(pro)  # appending the current product details to the end of the list
     print(pro["Name"] + " is now a new product.\n")
     for currentProd in prod:
-        print("Product ID:",currentProd["pId"],"|| Product Name: ",currentProd["Name"],"|| Produce Price: ",currentProd["Price"],"|| Category ID: ",currentProd["CategoryId"],"\n")
+        print("Product ID:",currentProd["pId"],"|| Product Name: ",currentProd["Name"],"|| Product Price: ",currentProd["Price"],"|| Category ID: ",currentProd["CategoryId"],"\n")
     dashboard(True, id)  # go back to dashboard
 
 
 # Function for placing an order
 def place_order(cId, orders, prod):
+    print()
+    for currentProd in prod:
+        print("Product ID:", currentProd["pId"], "|| Product Name: ", currentProd["Name"], "|| Product Price: ",
+              currentProd["Price"], "\n")
     ordId = len(orders)  # order id is equal to the length of the list
     while True:  # Error handling
         try:
