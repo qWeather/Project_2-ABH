@@ -365,7 +365,7 @@ def salesByCategory(input, id):
             for y in prod:
                 if y["Name"]==aList[i]:
                     print("£", y["Price"], end="\t\t")
-            print("£", total )
+                    print("£", total )
             print()
         print()
     else:
