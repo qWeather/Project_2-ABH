@@ -255,7 +255,7 @@ def insertCategory(categ, id):
     catId = len(categ)  # category id is equal to the length of the list
 
     while True:
-        catName = input("Enter category name: ")  # category name
+        catName = input("Enter category name: ").capitalize() # category name
         if catName.isalpha() and len(catName) > 1:  # checks if the category name contains letters and length is > 1
             break
     while True:
