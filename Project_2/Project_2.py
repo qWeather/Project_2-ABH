@@ -8,8 +8,6 @@ customers = [{"cId": 0, "Name": "Eugene", "Email": "dgsdf@fgd.com", "Number": "0
               "Street": "11 Fleet Street","Town":"Southampton","Country": "United Kingdom" ,"Password": "123"}]  # List of dictionaries for Customers
 admins = [{'adId': 0, 'Name': 'Abas', 'Password': "hello"}, {'adId': 1, 'Name': 'Beatrice', 'Password': "hello"},{'adId': 2, 'Name': 'Haze', 'Password': "hello"}] # List of dictionaries for Admins
 
-
-
 # Function for Main Menu
 def dashboard(isAdmin, id):
     if isAdmin:  # checks if the user is an admin and shows admin panel
@@ -339,8 +337,12 @@ def salesByID(input, id):
 
 # Function for retrieving the total sales by the category name
 def salesByCategory(input, id):
+    if input.isdigit():
+        print()
+        dashboard(True, id)
     print(f"Category: {input} ||    Price  || Total Sales")
     targetCat = False  # Flag to dictate if the entered category exists or not
+
     for i in categ:  # Loops through each category
         if input == i["Name"]:  # If entered category matches the name of the current category
             targetCat = i["catId"]  # Sets targetCat ID to the value of the matched category
@@ -349,8 +351,7 @@ def salesByCategory(input, id):
         bList = []  # List used to hold the product ids
         for order in orders:  # Loops through each order
             for products in prod:  # Loops through each product
-                if products[
-                    "CategoryId"] == targetCat:  # If the current products category id matches the target category id
+                if products["CategoryId"] == targetCat:  # If the current products category id matches the target category id
                     if not products["Name"] in aList:  # If the current product name isn't in aList
                         aList.append(products["Name"])  # Adds current product name to aList
                         bList.append(products["pId"])  # Adds current product id to bList
