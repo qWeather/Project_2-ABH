@@ -86,132 +86,142 @@ def dashboard(isAdmin, id):
             login(customers, admins, True)  # return to log in menu
 
 
-# Login function for customers and admins
-def login(customers, admins, c):
-    if c == True:
-        sys.exit()
-    while True:
-        print("[1] Customer Login\n[2] Admin Login\n[3] Customer Registration\n[4] Exit")
-        check = input("\nAre you a Customer or an Admin: ")  # check if the user is customer or admin
-        print()
-        if check == "2":  # admin
-            try:
-                a_username = int(input("Enter admin ID: "))  # admin username
-                a_password = input("Enter admin password: ")  # admin password
-                if a_username <= len(admins) - 1:  # username must be less or equal to the list of admins - 1
-                    if a_password == admins[a_username]["Password"]:  # if passwords match
-                        print("\nSuccessful!\n{} has been logged in.\n".format(admins[a_username]["Name"]))
-                        dashboard(True, a_username)  # return to the dashboard
-                        sys.exit()
-            except:
-                pass
-        elif check == "1":
-            try:
-                c_username = int(input("Enter customer ID: "))  # customer username
-                c_password = input("Enter customer password: ")  # customer password
-                if c_username <= len(admins) - 1:  # username must be less or equal to the list of admins - 1
-                    if c_password == customers[c_username]["Password"]:  # if passwords match
-                        print("\nSuccessful!\n{} has been logged in.\n".format(customers[c_username]["Name"]))
-                        dashboard(False, c_username)  # return to the dashboard
-                        sys.exit()
-            except:
-                pass
-        elif check == "3":
-            insertCustomerDetails(customers, "-1")  # update customer details
-        else:
-            sys.exit()
-            break
+# Login function for customers and admins                                                                                                            
+def login(customers, admins,c):                                                                                                                      
+    if c == True:                                                                                                                                    
+        sys.exit()                                                                                                                                   
+    while True:                                                                                                                                      
+        print("[1] Customer Login\n[2] Admin Login\n[3] Customer Registration\n[4] Exit")                                                            
+        check = input("\nAre you a Customer or an Admin: ")  # check if the user is customer or admin                                                
+        print()                                                                                                                                      
+        if check == "2":  # admin                                                                                                                    
+            try:                                                                                                                                     
+                a_username = int(input("Enter admin ID: "))  # admin username                                                                        
+                a_password = input("Enter admin password: ")  # admin password                                                                       
+                if a_username <= len(admins) - 1:  # username must be less or equal to the list of admins - 1                                        
+                    if a_password == admins[a_username]["Password"]:  # if passwords match                                                           
+                        print("\nSuccessful!\n{} has been logged in.\n".format(admins[a_username]["Name"]))                                          
+                        dashboard(True, a_username)  # return to the dashboard                                                                       
+            except:                                                                                                                                  
+                pass                                                                                                                                 
+        elif check == "1":                                                                                                                           
+            try:                                                                                                                                     
+                c_username = int(input("Enter customer ID: "))  # customer username                                                                  
+                c_password = input("Enter customer password: ")  # customer password                                                                 
+                if c_username <= len(admins) - 1:  # username must be less or equal to the list of admins - 1                                        
+                    if c_password == customers[c_username]["Password"]:  # if passwords match                                                        
+                        print("\nSuccessful!\n{} has been logged in.\n".format(customers[c_username]["Name"]))                                       
+                        dashboard(False, c_username)  # return to the dashboard                                                                      
+            except:                                                                                                                                  
+                pass                                                                                                                                 
+        elif check == "3":                                                                                                                           
+            insertCustomerDetails(customers, "-1")  # update customer details                                                                        
+        else:                                                                                                                                        
+            sys.exit()                                                                                                                               
+            break                                                                                                                                    
+                                                                                                                                                     
+def format_email(email):                                                                                                                             
+    if len(email.split("@")[0]) < 1 or email.count(".") != 1 or email.count("@") != 1 \                                                              
+            or (not email.endswith(".co") and not email.endswith(".com")                                                                             
+                and not email.endswith(".in") and not email.endswith(                                                                                
+                ".org")):  # If Left split is left than or the number of "@" characters is over 1, or if the email ends in .co,.com,.in or .org      
+        return False                                                                                                                                 
+    else:                                                                                                                                            
+        return True                                                                                                                                  
 
 
-def format_email(email):
-    if len(email.split("@")[0]) < 1 or email.count(".") != 1 or email.count("@") != 1 \
-            or (not email.endswith(".co") and not email.endswith(".com")
-                and not email.endswith(".in") and not email.endswith(
-                ".org")):  # If Left split is left than or the number of "@" characters is over 1, or if the email ends in .co,.com,.in or .org
-        return False
-    else:
-        return True
-
-
-# Function for registering a new customer (used as update customer details also)
-def insertCustomerDetails(customers, id):
-    if id == "-1":  # if customer id is less than 0
-        cId = len(customers)  # customer id is equal to the length of the list
-    else:
-        cId = id  # else customer id will be equal to id
-    while True:
-        try:
-            name = input("What's your name: ")
-            if name.isalpha() and len(name) >= 1:  # check for name to be all letters and length >= 1
-                break
-        except:
-            pass
-
-    while True:
-        try:
-            email = input("What's your email address: ")  # email address
-            if format_email(email):  # check for email to be in format
-                break
-        except:
-            pass
-
-    while True:
-        try:
-            number = int(input("What's your phone number: "))  # phone number
-            if 15 <= number >= 10:  # phone number has to be >= 10 and <= 15
-                break
-        except:
-            pass
-    while True:
-        try:
-            street = input("What's your street name: ")
-            if len(street) >= 1:  # street name has to be >= 1
-                break
-        except:
-            pass
-    while True:
-        try:
-            town = input("What is the name of your city: ")  # city name
-            if len(town) >= 1:  # city name has to be >= 1
-                break
-        except:
-            pass
-    while True:
-        try:
-            country = input("What is the name of your country: ")  # country name
-            if len(country) >= 1:  # country name has to be >= 1
-                break
-        except:
-            pass
-
-    while True:
-        try:
-            password = input("What is the password you want to use: ")  # customer password
-            if len(password) >= 8:  # password must be at least 8 characters
-                break
-        except:
-            pass
-    details = {  # dictionary for customer details
-        "cId": cId,
-        "Name": name,
-        "Email": email,
-        "Number": number,
-        "Street": street,
-        "Town": town,
-        "Country": country,
-        "Password": password
-    }
-    customers.append(details)  # appending the current customer details to the end of the list
-    print(
-        "\nCustomer ID: {} || Password: {} || Name: {} || Email: {} || Phone Number: {} || Street: {} || City: {} || Country: {} \n".format(
-            details["cId"],
-            details["Password"],
-            details["Name"],
-            details["Email"], details["Number"],
-            details["Street"],
-            details["Town"],
-            details["Country"]), end="\n")
-    login(customers, admins, True)  # go back to log in menu
+# Function for registering a new customer (used as update customer details also)                                                              
+def insertCustomerDetails(customers, id):                                                                                                     
+    check = 0                                                                                                                                 
+    if id == "-1":  # if customer id is less than 0                                                                                           
+        check = 1                                                                                                                             
+        cId = len(customers)  # customer id is equal to the length of the list                                                                
+    else:                                                                                                                                     
+        cId = id  # else customer id will be equal to id                                                                                      
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            name = input("What's your name: ")                                                                                                
+            if name.isalpha() and len(name) >= 1:  # check for name to be all letters and length >= 1                                         
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            email = input("What's your email address: ")  # email address                                                                     
+            if format_email(email):  # check for email to be in format                                                                        
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            number = int(input("What's your phone number: "))  # phone number                                                                 
+            if 15 <= number >= 10:  # phone number has to be >= 10 and <= 15                                                                  
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            street = input("What's your street name: ")                                                                                       
+            if len(street) >= 1:  # street name has to be >= 1                                                                                
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            town = input("What is the name of your city: ")  # city name                                                                      
+            if len(town) >= 1:  # city name has to be >= 1                                                                                    
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            country = input("What is the name of your country: ")  # country name                                                             
+            if len(country) >= 1:  # country name has to be >= 1                                                                              
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    while True:                                                                                                                               
+        try:                                                                                                                                  
+            password = input("What is the password you want to use: ")  # customer password                                                   
+            if len(password) >= 8:  # password must be at least 8 characters                                                                  
+                break                                                                                                                         
+        except:                                                                                                                               
+            pass                                                                                                                              
+                                                                                                                                              
+    details = {  # dictionary for customer details                                                                                            
+        "cId": cId,                                                                                                                           
+        "Name": name,                                                                                                                         
+        "Email": email,                                                                                                                       
+        "Number": number,                                                                                                                     
+        "Street": street,                                                                                                                     
+        "Town": town,                                                                                                                         
+        "Country": country,                                                                                                                   
+        "Password": password                                                                                                                  
+    }                                                                                                                                         
+    if check == -1:                                                                                                                           
+        customers.append(details)  # appending the current customer details to the end of the list                                            
+    else:                                                                                                                                     
+        customers.insert(id,details)  # inserting the new updated customer details                                                            
+    print(                                                                                                                                    
+        "\nCustomer ID: {} || Password: {} || Name: {} || Email: {} || Phone Number: {} || Street: {} || City: {} || Country: {} \n".format(  
+            details["cId"],                                                                                                                   
+            details["Password"],                                                                                                              
+            details["Name"],                                                                                                                  
+            details["Email"], details["Number"],                                                                                              
+            details["Street"],                                                                                                                
+            details["Town"],                                                                                                                  
+            details["Country"]), end="\n")                                                                                                    
+    if check == 1:                                                                                                                            
+        login(customers, admins,False)  # go back to log in menu                                                                             
+    else:                                                                                                                                     
+        dashboard(False,id)              # go back to the dashboard                                                                           
+                                                                                                                                              
 
 
 # Function for inserting a new category
