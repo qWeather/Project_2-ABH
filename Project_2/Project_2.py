@@ -36,7 +36,7 @@ def dashboard(isAdmin, id):
                 category_name = input("Enter category name you are looking for: ")
                 salesByCategory(category_name, id)  # call function for displaying all sales by category name
             elif sales == "3":
-                price_range = int(input("What range are you looking for [1] Ascending [2] Descending: "))
+                price_range = input("What range are you looking for [1] Ascending [2] Descending: ")
                 salesByPriceRange(price_range, id)  # call function for displaying all sales by price range
             elif sales == "4":
                 salesByLocation(id)
@@ -384,9 +384,15 @@ def salesByCategory(input, id):
 
 # Function for retrieving the total sales by the price range
 def salesByPriceRange(input, id):
+    if not input.isdigit():
+        print("\nInput can only be 1 or 2. Please try again. \n")
+        dashboard(True, id)
+    else:
+        input = int(input)
     flags = [False, True]  # List told hold the bool values that determine how the function will show the order of data
     if not input in [1, 2]:  # Checks if the entered value is not in range
-        input = 1  # Overrides the entered value as defaults it to Descending
+        print("\nInput can only be 1 or 2. Please try again. \n")
+        dashboard(True, id)
     msg = "Descending" if flags[input - 1] else "Ascending"  # Changes message dependant on entered value
     print(f"Item Name({msg}):  ||    Sales:  ||")
     sales = {}  # Initialise an empty dictionary to hold product ids as a key and total money they have accumulated
