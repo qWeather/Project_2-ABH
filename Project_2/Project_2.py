@@ -70,17 +70,19 @@ def dashboard(isAdmin, id):
                 if order_status == order["order_id"] and id == order[
                     "customer_id"]:  # check if status of order is the same as the order we're searching for
                     found = True
-                    print("\n[1] Yes\n[2] No\n")
-                    choice = int(input("Have you received this order: "))  # customer choice
-                    print()
-                    if choice == 1:
-                        order["order_status"] = "Delivered"  # change order status to delivered if option is Yes
+                    if order["order_status"]  !=  "Delivered" :
+
+                        print("\n[1] Yes\n[2] No\n")
+                        choice = int(input("Have you received this order: "))  # customer choice
+                        print()
+                        if choice == 1:
+                            order["order_status"] = "Delivered"  # change order status to delivered if option is Yes
                     print(f"Order ID:|| Product Name: || Quantity:  || Price:  || Order Status:  ")
                     for i in prod:  # loop through product list
                         if i["pId"] == order["product_id"]:  # check if the product id is equal to the one in the list
                             name = i["Name"]  # name of product id at the position i
                     print(order["order_id"], "\t\t", "\t", name, "\t  ", order["product_quantity"], "\t\t ",
-                          order["product_quantity"], "\t\t", order["order_status"] + "\n")
+                          order["total_price"], "\t\t", order["order_status"] + "\n")
 
             if not found:  # if order not found
                 print("\nOrder doesn't exist!\n")
