@@ -27,7 +27,7 @@ def dashboard(isAdmin, id):
                 for currentProd in prod:
                     print("Product ID:", currentProd["pId"], "|| Product Name: ", currentProd["Name"], "|| Product Price: ",
                           currentProd["Price"], "|| Category ID: ", currentProd["CategoryId"], "\n")
-                product_id = input("What product are you looking for: ")
+                product_id = input("Enter product ID you are looking for: ")
                 salesByID(product_id, id)  # call function for displaying all sales by product id
             elif sales == "2":
                 for currentCat in categ:
