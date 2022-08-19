@@ -44,7 +44,7 @@ def dashboard(isAdmin, id):
                 category_name = input("What category are you looking for: ")
                 salesByCategory(category_name, id)  # call function for displaying all sales by category name
             elif sales == "3":
-                price_range = int(input("What range are you looking for: "))
+                price_range = int(input("What range are you looking for [1] Ascending [2] Descending: "))
                 salesByPriceRange(price_range, id)  # call function for displaying all sales by price range
             elif sales == "4":
                 salesByLocation(id)
@@ -66,7 +66,6 @@ def dashboard(isAdmin, id):
             order_status = int(input("What is the order number: "))  # order status
             found = False  # bool for if order is found
             for order in orders:  # loop for order in the orders list
-
                 if order_status == order["order_id"] and id == order[
                     "customer_id"]:  # check if status of order is the same as the order we're searching for
                     found = True
@@ -83,7 +82,6 @@ def dashboard(isAdmin, id):
                             name = i["Name"]  # name of product id at the position i
                     print(order["order_id"], "\t\t", "\t", name, "\t  ", order["product_quantity"], "\t\t ",
                           order["total_price"], "\t\t", order["order_status"] + "\n")
-
             if not found:  # if order not found
                 print("\nOrder doesn't exist!\n")
             return dashboard(False, id)  # return to dashboard
@@ -92,7 +90,6 @@ def dashboard(isAdmin, id):
         else:
             print("\nYou have been logged out.\n")
             login(customers, admins, True)  # return to log in menu
-
 
 # Login function for customers and admins                                                                                                            
 def login(customers, admins,c):                                                                                                                      
@@ -151,56 +148,43 @@ def insertCustomerDetails(customers, id):
             name = input("What's your name: ")                                                                                                
             if name.isalpha() and len(name) >= 1:  # check for name to be all letters and length >= 1                                         
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             email = input("What's your email address: ")  # email address                                                                     
             if format_email(email):  # check for email to be in format                                                                        
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             number = int(input("What's your phone number: "))  # phone number                                                                 
             if 15 <= number >= 10:  # phone number has to be >= 10 and <= 15                                                                  
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             street = input("What's your street name: ")                                                                                       
             if len(street) >= 1:  # street name has to be >= 1                                                                                
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             town = input("What is the name of your city: ")  # city name                                                                      
             if len(town) >= 1:  # city name has to be >= 1                                                                                    
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             country = input("What is the name of your country: ")  # country name                                                             
             if len(country) >= 1:  # country name has to be >= 1                                                                              
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
-                                                                                                                                              
+        except:pass
     while True:                                                                                                                               
         try:                                                                                                                                  
             password = input("What is the password you want to use: ")  # customer password                                                   
             if len(password) >= 8:  # password must be at least 8 characters                                                                  
                 break                                                                                                                         
-        except:                                                                                                                               
-            pass                                                                                                                              
+        except: pass
                                                                                                                                               
     details = {  # dictionary for customer details                                                                                            
         "cId": cId,                                                                                                                           
@@ -229,7 +213,6 @@ def insertCustomerDetails(customers, id):
         login(customers, admins,False)  # go back to log in menu                                                                             
     else:                                                                                                                                     
         dashboard(False,id)              # go back to the dashboard                                                                           
-                                                                                                                                              
 
 
 # Function for inserting a new category
@@ -254,7 +237,6 @@ def insertCategory(categ, id):
     for currentCat in categ:
         print("Category ID:",currentCat["catId"],"|| Category Name: ",currentCat["Name"],"|| Category Description: ",currentCat["Description"],"\n")
     dashboard(True, id)  # go back to dashboard
-
 
 # Function for inserting new products
 def insertProducts(prod, categ):
@@ -292,7 +274,6 @@ def insertProducts(prod, categ):
     for currentProd in prod:
         print("Product ID:",currentProd["pId"],"|| Product Name: ",currentProd["Name"],"|| Product Price: ",currentProd["Price"],"|| Category ID: ",currentProd["CategoryId"],"\n")
     dashboard(True, id)  # go back to dashboard
-
 
 # Function for placing an order
 def place_order(cId, orders, prod):
@@ -336,7 +317,6 @@ def place_order(cId, orders, prod):
                                                                                     orders[ordId]["total_price"]),
           end="")
 
-
 # Function for retrieving the total sales by product id
 def salesByID(input, id):
     productIds = {}  # Create an Empty Dictionary for found products
@@ -364,7 +344,6 @@ def salesByID(input, id):
     else:  # If the entered input doesn't as a product id
         print("\nProduct doesn't exist!\n")  # Let user know the product doesn't exist
     dashboard(True, id)  # Return to Dashboard menu
-
 
 # Function for retrieving the total sales by the category name
 def salesByCategory(input, id):
@@ -399,7 +378,6 @@ def salesByCategory(input, id):
         print("\nCategory doesn't exist!\n")
     dashboard(True, id)
 
-
 # Function for retrieving the total sales by the price range
 def salesByPriceRange(input, id):
     flags = [False, True]  # List told hold the bool values that determine how the function will show the order of data
@@ -427,7 +405,6 @@ def salesByPriceRange(input, id):
     print()
     dashboard(True, id)
 
-
 # Function for retrieving the total sales by location
 def salesByLocation(id):
     print("Location:  ||   Sales:  ||")
@@ -449,6 +426,5 @@ def salesByLocation(id):
         print()
     print()
     dashboard(True, id)  # Returns to Dashboard Menu when finished
-
 
 login(customers, admins, False)
