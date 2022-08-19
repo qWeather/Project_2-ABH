@@ -9,7 +9,7 @@ orders = [{'order_id': 0, 'customer_id': 0, 'product_id': 0, 'product_quantity':
           {'order_id': 1, 'customer_id': 0, 'product_id': 1, 'product_quantity': 5,
            'order_status': 'Shipped', 'total_price': 600.0}]  # List of dictionaries for Orders
 customers = [{"cId": 0, "Name": "Eugene", "Email": "dgsdf@fgd.com", "Number": "01296583999",
-              "Street": "11 Fleet Street", "Password": "123"}]  # List of dictionaries for Customers
+              "Street": "11 Fleet Street","Town":"Southampton","Country": "United Kingdom" ,"Password": "123"}]  # List of dictionaries for Customers
 
 admins = [{'adId': 0, 'Name': 'Abas', 'Password': "hello"},  # List of dictionaries for Admins
           {'adId': 1, 'Name': 'Beatrice', 'Password': "hello"},
@@ -32,9 +32,15 @@ def dashboard(isAdmin, id):
             sales = input("What would you like to do: ")  # sales choice
             print()
             if sales == "1":
+                for currentProd in prod:
+                    print("Product ID:", currentProd["pId"], "|| Product Name: ", currentProd["Name"], "|| Product Price: ",
+                          currentProd["Price"], "|| Category ID: ", currentProd["CategoryId"], "\n")
                 product_id = int(input("What product are you looking for: "))
                 salesByID(product_id, id)  # call function for displaying all sales by product id
             elif sales == "2":
+                for currentCat in categ:
+                    print("Category ID:", currentCat["catId"], "|| Category Name: ", currentCat["Name"],
+                          "|| Category Description: ", currentCat["Description"], "\n")
                 category_name = input("What category are you looking for: ")
                 salesByCategory(category_name, id)  # call function for displaying all sales by category name
             elif sales == "3":
@@ -121,7 +127,7 @@ def login(customers, admins,c):
             break                                                                                                                                    
                                                                                                                                                      
 def format_email(email):                                                                                                                             
-    if len(email.split("@")[0]) < 1 or email.count(".") != 1 or email.count("@") != 1 \                                                              
+    if len(email.split("@")[0]) < 1 or email.count(".") != 1 or email.count("@") != 1 \
             or (not email.endswith(".co") and not email.endswith(".com")                                                                             
                 and not email.endswith(".in") and not email.endswith(                                                                                
                 ".org")):  # If Left split is left than or the number of "@" characters is over 1, or if the email ends in .co,.com,.in or .org      
@@ -339,7 +345,7 @@ def salesByID(input, id):
         else:  # If product of the current order is not in product dictionary
             productIds[i['product_id']] = [i[
                                                'order_id']]  # Create a key of the current product, and initialise a list with the current order id as it's sole value
-    if input in productIds > 0:  # Checks if the entered product id exists in the product dictionary
+    if input in productIds:  # Checks if the entered product id exists in the product dictionary
         numberSold = 0  # Initialise numberSold to 0
         for currentProd in productIds[input]:  # Loops through each order id associated with the entered product id
             totalPrice = 0  # Initialise totalPrice to 0
@@ -350,7 +356,8 @@ def salesByID(input, id):
                     totalPrice += order["total_price"]  # Increase totalPrice by total price in order
             print(str(currentProd) + " " * 15, end="")
             print(str(numberSold) + " " * 15, end="")
-            print("£", totalPrice + "\n")
+            print("£", totalPrice )
+            print()
         print()
     else:  # If the entered input doesn't as a product id
         print("\nProduct doesn't exist!\n")  # Let user know the product doesn't exist
@@ -364,7 +371,7 @@ def salesByCategory(input, id):
     for i in categ:  # Loops through each category
         if input == i["Name"]:  # If entered category matches the name of the current category
             targetCat = i["catId"]  # Sets targetCat ID to the value of the matched category
-    if targetCat:
+    if targetCat >-1 or not False:
         aList = []  # List used to hold the names of products within target category
         bList = []  # List used to hold the product ids
         for order in orders:  # Loops through each order
@@ -383,7 +390,8 @@ def salesByCategory(input, id):
             biggestnum = " " * (11 - len(input) + 1) if len(input) > len(aList[i]) else " " * (11 - len(aList[i]) + 1)
             print(aList[i] + biggestnum, end="\t\t")
             print("£", products["Price"], end="\t\t")
-            print("£", total + "\n")
+            print("£", total )
+            print()
         print()
     else:
         print("\nCategory doesn't exist!\n")
@@ -424,11 +432,10 @@ def salesByLocation(id):
     locations = {}  # Create an Empty Dictionary for found locations
     for i in range(len(customers)):  # Loop through each customer
         if customers[i]["Town"] in locations:  # If the Customer's Town is in locations dictionary
-            locations[customers[i]["Town"]].append(
-                i)  # Adds customer to the values of the key matching their town in locations dictionary
+            locations[customers[i]["Town"]].append(i)  # Adds customer to the values of the key matching their town in locations dictionary
         else:  # If Customer's Town is not in locations dictionary
-            locations[customers[i]["Town"]] = [
-                i]  # Create a key of the Customer's Town, and initialise a list with the current customers as it's sole value
+            locations[customers[i]["Town"]] = [i]  # Create a key of the Customer's Town, and initialise a list with the current customers as it's sole value
+
     for location in locations:  # Checks each location in locations list
         totalPrice = 0  # Initialise totalPrice to 0
         print(location + " " * (10 - len(location)), end="\t\t")  # Print the current location
